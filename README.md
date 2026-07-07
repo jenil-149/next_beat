@@ -12,7 +12,6 @@ A Spotify-inspired music streaming web app built with Next.js and Supabase. User
 - Create playlists and add songs to them
 - Search songs by title with debounce
 - Library sidebar showing user-uploaded tracks
-- Stripe integration for subscription and billing (products, prices, subscriptions)
 - Responsive layout with mobile and desktop player controls
 
 ## Tech Stack
@@ -27,7 +26,6 @@ A Spotify-inspired music streaming web app built with Next.js and Supabase. User
 | Forms | React Hook Form |
 | UI Primitives | Radix UI (Dialog, Slider, Icons) |
 | Icons | React Icons |
-| Payments | Stripe |
 | Notifications | React Hot Toast |
 | Font | Poppins (Google Fonts) |
 
@@ -61,9 +59,6 @@ npm install
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
 SUPABASE_SERVICE_ROLE_KEY=
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
-STRIPE_SECRET_KEY=
-STRIPE_WEBHOOK_SECRET=
 ```
 
 3. Run the dev server:
@@ -78,6 +73,4 @@ npm run dev
 - **Audio with React refs** - Managing an `HTMLAudioElement` via `useRef` instead of a third-party library gave full control over playback, seek, and cleanup on song change. Proper event listener cleanup in the `useEffect` return is critical to avoid memory leaks and ghost audio.
 - **Zustand for media state** - A simple Zustand store handles the player queue, active song, and volume globally without prop drilling, which is the right fit for a persistent player bar that lives outside the page component tree.
 - **Next.js revalidation** - Setting `export const revalidate = 0` at the layout level forces fresh data on every request, which matters for a music library that changes frequently.
-- **Radix UI Slider** - Using a headless, accessible slider for both the seek bar and volume control avoids building custom drag logic from scratch while keeping full styling control via Tailwind.
 - **Debouncing search** - A `useDebounce` hook on the search input prevents firing a Supabase query on every keystroke, reducing unnecessary database reads.
-- **Stripe type integration** - Typing billing address and payment method directly against `Stripe.*` types keeps the data model aligned with the Stripe API without maintaining a separate type layer.
